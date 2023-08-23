@@ -3,19 +3,19 @@ using SysMed.Model;
 
 namespace SysMed.Data
 {
-    public class SysmedDbContext : DbContext
+    public class SysmedContext : DbContext
     {
-        public SysmedDbContext(DbContextOptions<SysmedDbContext> options) : base(options)
+        public SysmedContext(DbContextOptions<SysmedContext> options) : base(options)
         {
         }
 
         public DbSet<MedicalDevice> MedicalDevices { get; set; }
-        public DbSet<MaintenanceSchedule> MaintenanceSchedules { get; set; }
+        public DbSet<Maintenance> Maintenances { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MedicalDevice>().ToTable("MedicalDevices");
-            modelBuilder.Entity<MaintenanceSchedule>().ToTable("MaintenanceSchedules");
+            modelBuilder.Entity<Maintenance>().ToTable("Maintenances");
         }
     }
 }

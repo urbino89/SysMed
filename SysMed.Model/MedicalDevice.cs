@@ -17,5 +17,7 @@
         public DateTime LastMaintenanceDate { get; set; }
 
         public int MaintenanceIntervalInDays { get; set; }
+
+        public virtual ICollection<Maintenance> MaintenanceSchedules { get; set; }
     }
 }
