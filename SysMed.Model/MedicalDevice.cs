@@ -1,6 +1,6 @@
 ﻿namespace SysMed.Model
 {
-    public class MedicalEquipment
+    public class MedicalDevice
     {
         public string Id { get; set; }
 
@@ -11,5 +11,11 @@
         public string Brand { get; set; }
 
         public string Model { get; set; }
+
+        public DateTime PurchaseDate { get; set; }
+
+        public DateTime LastMaintenanceDate { get; set; }
+
+        public int MaintenanceIntervalInDays { get; set; }
     }
 }

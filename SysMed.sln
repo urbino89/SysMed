@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysMed", "SysMed\SysMed.csproj", "{F86AB83A-652D-4333-9E2A-56C8D21299A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SysMed", "SysMed\SysMed.csproj", "{F86AB83A-652D-4333-9E2A-56C8D21299A3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SysMed.Data", "SysMed.Data\SysMed.Data.csproj", "{7206A8C4-E62E-43A9-9B2E-07C52B593EF0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SysMed.Model", "SysMed.Model\SysMed.Model.csproj", "{3883F0B0-6238-4620-8E13-CFD55BD84350}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{F86AB83A-652D-4333-9E2A-56C8D21299A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F86AB83A-652D-4333-9E2A-56C8D21299A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F86AB83A-652D-4333-9E2A-56C8D21299A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7206A8C4-E62E-43A9-9B2E-07C52B593EF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7206A8C4-E62E-43A9-9B2E-07C52B593EF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7206A8C4-E62E-43A9-9B2E-07C52B593EF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7206A8C4-E62E-43A9-9B2E-07C52B593EF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3883F0B0-6238-4620-8E13-CFD55BD84350}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3883F0B0-6238-4620-8E13-CFD55BD84350}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3883F0B0-6238-4620-8E13-CFD55BD84350}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3883F0B0-6238-4620-8E13-CFD55BD84350}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
