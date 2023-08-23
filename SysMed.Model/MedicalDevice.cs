@@ -1,4 +1,7 @@
-﻿namespace SysMed.Model
+﻿using System;
+using System.Collections.Generic;
+
+namespace SysMed.Model
 {
     public class MedicalDevice
     {

@@ -1,4 +1,6 @@
-﻿namespace SysMed.Model
+﻿using System;
+
+namespace SysMed.Model
 {
     public class Maintenance
     {
