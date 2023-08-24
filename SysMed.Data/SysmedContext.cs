@@ -12,13 +12,11 @@ namespace SysMed.Data
         public DbSet<MedicalDevice> MedicalDevices { get; set; }
         public DbSet<Maintenance> Maintenances { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\\mssqllocaldb;Database=SysMed;Trusted_Connection=True;MultipleActiveResultSets=true");
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Configure default schema
+            modelBuilder.HasDefaultSchema("dbo");
+
             modelBuilder.Entity<MedicalDevice>().ToTable("MedicalDevices");
             modelBuilder.Entity<Maintenance>().ToTable("Maintenances");
 
