@@ -17,13 +17,14 @@ namespace SysMed.Services
         private const string SqlAddExceptionMessage = "Error Adding MedicalDevice to the database";
         private const string SqlAddSuccessfulMessage = "Device Added Successfully";
         private SysmedContext _context;
+
         public MedicalDeviceService(ILogger<MedicalDeviceService> logger, SysmedContext context)
         {
             _logger = logger;
             _context = context;
         }
 
-        public async Task<DbTransactionResponseDto> AddMedicalDevices(IEnumerable<MedicalDeviceDto> devices)
+        public async Task<DbTransactionResponseDto> Add(IEnumerable<MedicalDeviceDto> devices)
         {
             try
             {
@@ -53,7 +54,7 @@ namespace SysMed.Services
 
                 if (e is DbUpdateException dbUpdateEx && dbUpdateEx?.InnerException is SqlException sqlException)
                 {
-                     response.Message = sqlException.Message;
+                    response.Message = sqlException.Message;
                 }
                 return response;
             }
@@ -66,17 +67,39 @@ namespace SysMed.Services
             };
         }
 
-    }
+        public Task<List<MedicalDeviceDto>> GetAll()
+        {
+            return _context.MedicalDevices.Select(d => new MedicalDeviceDto
+            {
+                ServiceId = d.ServiceId,
+                Name = d.Name,
+                Description = d.Description,
+                Brand = d.Brand,
+                MaintenanceIntervalInDays = d.MaintenanceIntervalInDays,
+                Model = d.Model,
+                PurchaseDate = d.PurchaseDate,
+                LastMaintenanceDate = d.LastMaintenanceDate
+            }).ToListAsync();
+        }
 
-    public interface IMedicalDeviceService
-    {
-        Task<DbTransactionResponseDto> AddMedicalDevices(IEnumerable<MedicalDeviceDto> devices);
-    }
+        public MedicalDeviceDto GetByServiceId(Guid serviceId)
+        {
+            var device = _context.MedicalDevices.SingleOrDefault(d => d.ServiceId.Equals(serviceId.ToString()));
 
-    public class DbTransactionResponseDto
-    {
-        public bool Success { get; set; }
-        public string Message { get; set; }
-        public string Code { get; set; }
+            if (device == default)
+                return null;
+
+            return new MedicalDeviceDto
+            {
+                ServiceId = device.ServiceId,
+                Name = device.Name,
+                Description = device.Description,
+                Brand = device.Brand,
+                MaintenanceIntervalInDays = device.MaintenanceIntervalInDays,
+                Model = device.Model,
+                PurchaseDate = device.PurchaseDate,
+                LastMaintenanceDate = device.LastMaintenanceDate
+            };
+        }
     }
 }
