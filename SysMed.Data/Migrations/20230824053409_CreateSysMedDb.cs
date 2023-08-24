@@ -19,13 +19,14 @@ namespace SysMed.Data.Migrations
                 schema: "dbo",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Brand = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Model = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    PurchaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastMaintenanceDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PurchaseDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastMaintenanceDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     MaintenanceIntervalInDays = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -44,27 +45,27 @@ namespace SysMed.Data.Migrations
                     Type = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ScheduledDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CompletedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CompletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Completed = table.Column<bool>(type: "bit", nullable: false),
-                    PerformedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MedicalDeviceId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    PerformedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Maintenances", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Maintenances_MedicalDevices_MedicalDeviceId1",
-                        column: x => x.MedicalDeviceId1,
+                        name: "FK_Maintenances_MedicalDevices_MedicalDeviceId",
+                        column: x => x.MedicalDeviceId,
                         principalSchema: "dbo",
                         principalTable: "MedicalDevices",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Maintenances_MedicalDeviceId1",
+                name: "IX_Maintenances_MedicalDeviceId",
                 schema: "dbo",
                 table: "Maintenances",
-                column: "MedicalDeviceId1");
+                column: "MedicalDeviceId");
         }
 
         /// <inheritdoc />

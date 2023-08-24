@@ -14,30 +14,29 @@ namespace SysMed.Services
         private readonly ILogger _logger;
         private const string SqlAddExceptionMessage = "Error Adding MedicalDevice to the database";
         private const string SqlAddSuccessfulMessage = "Device Added Successfully";
-        public MedicalDeviceService(ILogger<MedicalDeviceService> logger)
+        private SysmedContext _context;
+        public MedicalDeviceService(ILogger<MedicalDeviceService> logger, SysmedContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public async Task<DbTransactionResponseDto> AddMedicalDevices(IEnumerable<MedicalDeviceDto> devices)
         {
             try
             {
-                using (var context = new SysmedContext())
+                await _context.AddRangeAsync(devices.Select(d => new MedicalDevice
                 {
-                    await context.AddRangeAsync(devices.Select(d => new MedicalDevice
-                    {
-                        Name = d.Name,
-                        Description = d.Description,
-                        Brand = d.Brand,
-                        MaintenanceIntervalInDays = d.MaintenanceIntervalInDays,
-                        Model = d.Model,
-                        PurchaseDate = d.PurchaseDate,
-                        LastMaintenanceDate = d.LastMaintenanceDate
-                    }));
+                    Name = d.Name,
+                    Description = d.Description,
+                    Brand = d.Brand,
+                    MaintenanceIntervalInDays = d.MaintenanceIntervalInDays,
+                    Model = d.Model,
+                    PurchaseDate = d.PurchaseDate,
+                    LastMaintenanceDate = d.LastMaintenanceDate
+                }));
 
-                    await context.SaveChangesAsync();
-                }
+                await _context.SaveChangesAsync();
             }
             catch (Exception e)
             {

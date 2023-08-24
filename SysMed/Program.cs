@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,8 +19,10 @@ builder.Services.AddDbContext<SysmedContext>(options =>
 options.UseSqlServer(
     builder.Configuration.GetConnectionString("SysMedContext"))
 );
-
 builder.Services.AddScoped<IMedicalDeviceService, MedicalDeviceService>();
+builder.Services.AddAuthentication(
+        CertificateAuthenticationDefaults.AuthenticationScheme)
+        .AddCertificate();
 
 var app = builder.Build();
 
@@ -30,7 +33,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

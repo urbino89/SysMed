@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SysMed.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class MedicalDeviceController : ControllerBase
     {
         private readonly ILogger<MedicalDeviceController> _logger;

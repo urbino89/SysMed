@@ -3,3 +3,4 @@
 add-migration CreateSysMedDb -Verbose
 # Script Migration:
 Script-Migration 
+Script-Migration -From <PreviousMigration> -To <LastMigration>

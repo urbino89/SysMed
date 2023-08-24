@@ -12,7 +12,7 @@ using SysMed.Data;
 namespace SysMed.Data.Migrations
 {
     [DbContext(typeof(SysmedContext))]
-    [Migration("20230824024616_CreateSysMedDb")]
+    [Migration("20230824053409_CreateSysMedDb")]
     partial class CreateSysMedDb
     {
         /// <inheritdoc />
@@ -37,7 +37,7 @@ namespace SysMed.Data.Migrations
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("CompletedOn")
+                    b.Property<DateTime?>("CompletedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -45,9 +45,6 @@ namespace SysMed.Data.Migrations
 
                     b.Property<int>("MedicalDeviceId")
                         .HasColumnType("int");
-
-                    b.Property<string>("MedicalDeviceId1")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PerformedBy")
                         .HasColumnType("nvarchar(max)");
@@ -60,15 +57,18 @@ namespace SysMed.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MedicalDeviceId1");
+                    b.HasIndex("MedicalDeviceId");
 
                     b.ToTable("Maintenances", "dbo");
                 });
 
             modelBuilder.Entity("SysMed.Model.MedicalDevice", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Brand")
                         .IsRequired()
@@ -78,7 +78,7 @@ namespace SysMed.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("LastMaintenanceDate")
+                    b.Property<DateTime?>("LastMaintenanceDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("MaintenanceIntervalInDays")
@@ -94,7 +94,7 @@ namespace SysMed.Data.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<DateTime>("PurchaseDate")
+                    b.Property<DateTime?>("PurchaseDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -106,7 +106,9 @@ namespace SysMed.Data.Migrations
                 {
                     b.HasOne("SysMed.Model.MedicalDevice", "MedicalDevice")
                         .WithMany("MaintenanceSchedules")
-                        .HasForeignKey("MedicalDeviceId1");
+                        .HasForeignKey("MedicalDeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("MedicalDevice");
                 });

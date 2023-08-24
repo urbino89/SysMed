@@ -25,6 +25,10 @@ namespace SysMed.Data
             modelBuilder.Entity<Maintenance>().ToTable("Maintenances");
 
             // Configuration using Fluent API
+            // MedicalDevice
+            modelBuilder.Entity<MedicalDevice>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
             modelBuilder.Entity<MedicalDevice>()
                 .Property(p => p.Name)
                 .HasMaxLength(250)
@@ -37,6 +41,11 @@ namespace SysMed.Data
                 .Property(p => p.Model)
                 .HasMaxLength(250)
                 .IsRequired();
+
+            // Maintenance
+            modelBuilder.Entity<Maintenance>()
+               .Property(p => p.Id)
+               .ValueGeneratedOnAdd();
         }
     }
 }

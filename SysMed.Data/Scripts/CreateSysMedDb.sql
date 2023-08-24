@@ -12,13 +12,13 @@ BEGIN TRANSACTION;
 GO
 
 CREATE TABLE [dbo].[MedicalDevices] (
-    [Id] nvarchar(450) NOT NULL,
+    [Id] int NOT NULL IDENTITY,
     [Name] nvarchar(250) NOT NULL,
     [Description] nvarchar(max) NULL,
     [Brand] nvarchar(250) NOT NULL,
     [Model] nvarchar(250) NOT NULL,
-    [PurchaseDate] datetime2 NOT NULL,
-    [LastMaintenanceDate] datetime2 NOT NULL,
+    [PurchaseDate] datetime2 NULL,
+    [LastMaintenanceDate] datetime2 NULL,
     [MaintenanceIntervalInDays] int NOT NULL,
     CONSTRAINT [PK_MedicalDevices] PRIMARY KEY ([Id])
 );
@@ -30,20 +30,19 @@ CREATE TABLE [dbo].[Maintenances] (
     [Type] int NOT NULL,
     [Description] nvarchar(max) NULL,
     [ScheduledDate] datetime2 NOT NULL,
-    [CompletedOn] datetime2 NOT NULL,
+    [CompletedOn] datetime2 NULL,
     [Completed] bit NOT NULL,
     [PerformedBy] nvarchar(max) NULL,
-    [MedicalDeviceId1] nvarchar(450) NULL,
     CONSTRAINT [PK_Maintenances] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Maintenances_MedicalDevices_MedicalDeviceId1] FOREIGN KEY ([MedicalDeviceId1]) REFERENCES [dbo].[MedicalDevices] ([Id])
+    CONSTRAINT [FK_Maintenances_MedicalDevices_MedicalDeviceId] FOREIGN KEY ([MedicalDeviceId]) REFERENCES [dbo].[MedicalDevices] ([Id]) ON DELETE CASCADE
 );
 GO
 
-CREATE INDEX [IX_Maintenances_MedicalDeviceId1] ON [dbo].[Maintenances] ([MedicalDeviceId1]);
+CREATE INDEX [IX_Maintenances_MedicalDeviceId] ON [dbo].[Maintenances] ([MedicalDeviceId]);
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20230824024616_CreateSysMedDb', N'7.0.10');
+VALUES (N'20230824053409_CreateSysMedDb', N'7.0.10');
 GO
 
 COMMIT;
