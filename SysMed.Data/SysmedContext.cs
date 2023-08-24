@@ -9,6 +9,10 @@ namespace SysMed.Data
         {
         }
 
+        public SysmedContext()
+        {            
+        }
+
         public DbSet<MedicalDevice> MedicalDevices { get; set; }
         public DbSet<Maintenance> Maintenances { get; set; }
 

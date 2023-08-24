@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace SysMed.Model
 {
-    public class MedicalDevice
+    public class MedicalDeviceDto
     {
-        public string Id { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -15,12 +12,10 @@ namespace SysMed.Model
 
         public string Model { get; set; }
 
-        public DateTime? PurchaseDate { get; set; }
+        public DateTime PurchaseDate { get; set; }
 
         public DateTime? LastMaintenanceDate { get; set; }
 
         public int MaintenanceIntervalInDays { get; set; }
-
-        public virtual ICollection<Maintenance> MaintenanceSchedules { get; set; }
     }
 }

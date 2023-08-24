@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SysMed.Model;
+using SysMed.Services;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SysMed.Controllers
 {
@@ -7,11 +12,22 @@ namespace SysMed.Controllers
     [Route("[controller]")]
     public class MedicalDeviceController : ControllerBase
     {
-        private readonly ILogger<MedicalDeviceController> logger;
+        private readonly ILogger<MedicalDeviceController> _logger;
+        private readonly IMedicalDeviceService _medicalDeviceService;
 
-        public MedicalDeviceController(ILogger<MedicalDeviceController> logger)
+        public MedicalDeviceController(
+            ILogger<MedicalDeviceController> logger,
+            IMedicalDeviceService medicalDeviceService)
         {
-            this.logger = logger;
+            _medicalDeviceService = medicalDeviceService;
+            _logger = logger;
+        }
+
+        [HttpPost(Name = "Add")]
+        public async Task<IActionResult> Add(IEnumerable<MedicalDeviceDto> devices)
+        {
+            var response = await _medicalDeviceService.AddMedicalDevices(devices);
+            return Ok(response);
         }
     }
-}
+ }
