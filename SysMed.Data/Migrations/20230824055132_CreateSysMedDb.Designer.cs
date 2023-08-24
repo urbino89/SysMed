@@ -12,7 +12,7 @@ using SysMed.Data;
 namespace SysMed.Data.Migrations
 {
     [DbContext(typeof(SysmedContext))]
-    [Migration("20230824053409_CreateSysMedDb")]
+    [Migration("20230824055132_CreateSysMedDb")]
     partial class CreateSysMedDb
     {
         /// <inheritdoc />
@@ -97,7 +97,14 @@ namespace SysMed.Data.Migrations
                     b.Property<DateTime?>("PurchaseDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ServiceId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ServiceId")
+                        .IsUnique()
+                        .HasFilter("[ServiceId] IS NOT NULL");
 
                     b.ToTable("MedicalDevices", "dbo");
                 });

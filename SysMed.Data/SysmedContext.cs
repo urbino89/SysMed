@@ -26,6 +26,9 @@ namespace SysMed.Data
 
             // Configuration using Fluent API
             // MedicalDevice
+            modelBuilder.Entity<MedicalDevice>().
+                HasIndex(e => e.ServiceId)
+                .IsUnique();
             modelBuilder.Entity<MedicalDevice>()
                 .Property(p => p.Id)
                 .ValueGeneratedOnAdd();

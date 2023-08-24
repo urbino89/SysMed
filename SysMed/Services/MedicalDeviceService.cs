@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SysMed.Data;
 using SysMed.Infrastructure;
 using SysMed.Model;
@@ -27,6 +29,7 @@ namespace SysMed.Services
             {
                 await _context.AddRangeAsync(devices.Select(d => new MedicalDevice
                 {
+                    ServiceId = d.ServiceId,
                     Name = d.Name,
                     Description = d.Description,
                     Brand = d.Brand,
@@ -41,13 +44,18 @@ namespace SysMed.Services
             catch (Exception e)
             {
                 _logger.LogError(e, SqlAddExceptionMessage);
-
-                return new DbTransactionResponseDto
+                var response = new DbTransactionResponseDto
                 {
                     Success = false,
                     Message = SqlAddExceptionMessage,
                     Code = ApiResponseCodes.AddMedicalDeviceError
                 };
+
+                if (e is DbUpdateException dbUpdateEx && dbUpdateEx?.InnerException is SqlException sqlException)
+                {
+                     response.Message = sqlException.Message;
+                }
+                return response;
             }
 
             return new DbTransactionResponseDto

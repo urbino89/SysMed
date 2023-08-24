@@ -21,6 +21,7 @@ namespace SysMed.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ServiceId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Brand = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
@@ -66,6 +67,14 @@ namespace SysMed.Data.Migrations
                 schema: "dbo",
                 table: "Maintenances",
                 column: "MedicalDeviceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MedicalDevices_ServiceId",
+                schema: "dbo",
+                table: "MedicalDevices",
+                column: "ServiceId",
+                unique: true,
+                filter: "[ServiceId] IS NOT NULL");
         }
 
         /// <inheritdoc />

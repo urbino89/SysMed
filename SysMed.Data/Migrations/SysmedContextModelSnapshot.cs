@@ -94,7 +94,14 @@ namespace SysMed.Data.Migrations
                     b.Property<DateTime?>("PurchaseDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ServiceId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ServiceId")
+                        .IsUnique()
+                        .HasFilter("[ServiceId] IS NOT NULL");
 
                     b.ToTable("MedicalDevices", "dbo");
                 });

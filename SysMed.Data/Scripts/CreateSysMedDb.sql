@@ -13,6 +13,7 @@ GO
 
 CREATE TABLE [dbo].[MedicalDevices] (
     [Id] int NOT NULL IDENTITY,
+    [ServiceId] nvarchar(450) NULL,
     [Name] nvarchar(250) NOT NULL,
     [Description] nvarchar(max) NULL,
     [Brand] nvarchar(250) NOT NULL,
@@ -41,8 +42,11 @@ GO
 CREATE INDEX [IX_Maintenances_MedicalDeviceId] ON [dbo].[Maintenances] ([MedicalDeviceId]);
 GO
 
+CREATE UNIQUE INDEX [IX_MedicalDevices_ServiceId] ON [dbo].[MedicalDevices] ([ServiceId]) WHERE [ServiceId] IS NOT NULL;
+GO
+
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20230824053409_CreateSysMedDb', N'7.0.10');
+VALUES (N'20230824055132_CreateSysMedDb', N'7.0.10');
 GO
 
 COMMIT;
